@@ -1,0 +1,33 @@
+{
+  "name": "node_lab01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect ./src/index.js",
+    "watch": "node-sass --watch ./src/resources/scss -o ./src/public/css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neverdung1999/nodeJS_Lab01.git"
+  },
+  "keywords": [
+    "nodejs",
+    "js"
+  ],
+  "author": "minhducms",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neverdung1999/nodeJS_Lab01/issues"
+  },
+  "homepage": "https://github.com/neverdung1999/nodeJS_Lab01#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "node-sass": "^5.0.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
