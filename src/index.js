@@ -6,6 +6,7 @@ const app = express()
 const port = 9999
 const Route = require('./routes/index')
 const db = require('./config/db')
+const methodOverride = require('method-override')
 
 //connect DB 
 db.connect();
@@ -13,16 +14,22 @@ db.connect();
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use(express.urlencoded({
-  extended: true
+  extended: true,
 }));
 app.use(express.json());
+
+// override with the X-HTTP-Method-Override header in the request
+app.use(methodOverride('_method'))
 
 //HTTP Logger
 // app.use(morgan('combined'))
 
 //handlebars engine
 app.engine('hbs', handlebars({
-  extname: ".hbs"
+  extname: ".hbs",
+  helpers: {
+    sum: (a,b) => a + b,
+  }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));

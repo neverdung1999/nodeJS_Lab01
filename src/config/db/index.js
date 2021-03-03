@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-async function connect() {
+async function connect () {
     try {
         await mongoose.connect('mongodb://localhost:27017/f8_education_dev', {
             useNewUrlParser: true,
@@ -8,9 +8,9 @@ async function connect() {
             useFindAndModify: false,
             useCreateIndex: true
         });
-        console.log('connect successfully!!!')
+        console.log('Connect Successfully!!!')
     } catch (error) {
-        console.log('connect failuer!!!')
+        console.log('Connect Failer!!!')
     }
 }
 
