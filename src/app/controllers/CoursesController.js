@@ -76,6 +76,11 @@ class CourseController {
             .then(() => {res.redirect('back')})
             .catch(next)
     }
+
+    //[POST] /course/handle-form-action
+    handleFormAction(req,res,next) {
+        res.json(req.body)
+    }
     
 }
 
