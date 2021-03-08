@@ -32,7 +32,7 @@ class CourseController {
     // [POST] /course/store
     store(req,res,next) {
         const formBody = req.body
-        formBody.img = `https://img.youtube.com/vi/${formBody.videoId}/maxresdefault.jpg`
+        // formBody.img = `https://img.youtube.com/vi/${formBody.videoId}/maxresdefault.jpg`
         const course = new Course(formBody)
         course.save()
             .then(() => res.redirect('/course'))
@@ -51,7 +51,7 @@ class CourseController {
     
     //[PUT] /course/:id
     update(req,res,next) {
-        Course.updateOne({ _id: req.params.id }, req.body )
+        Course.updateOne({ _id: req.params.id }, req.body ) //req.body là object muốn edit
             .then(()=> res.redirect('/me/stored/course'))
             .catch(next)
     }
@@ -79,7 +79,17 @@ class CourseController {
 
     //[POST] /course/handle-form-action
     handleFormAction(req,res,next) {
-        res.json(req.body)
+        switch(req.body.action){
+            case 'delete':
+                Course.delete({ _id: {$in: req.body.coursesId} })
+                    .then(() => {res.redirect('back')})
+                    .catch(next)    
+                break;
+            default:
+                res.json({message:"function is not validate"})
+        }
+
+        // res.json(req.body)
     }
     
 }

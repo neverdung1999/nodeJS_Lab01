@@ -1,7 +1,7 @@
 <form class="mt-4" name="form-container" method="POST" action="/course/handle-form-action">
     <div class="">
         <div>
-          <h3>Khóa học của tôi</h3>
+          <h3>Khóa học của tôi </h3> 
           <a href="/me/trash/course">Thùng rác ({{deleteCount}})</a>
 
           <div class="mt-4 d-flex align-items-center">
@@ -30,8 +30,15 @@
                 <tr>
                     <th></th>
                     <th scope="col">Số thứ tự</th>
-                    <th scope="col">Tên khóa học</th>
-                    <th scope="col">Mô tả khóa học</th>
+                    <th 
+                      scope="col">Tên khóa học
+                      {{{sortable 'name' _sort}}}
+                      {{!-- 'name' là một trường trong database, ở đây đang sort theo tên khóa học nên để là 'name' --}}
+                    </th>
+                    <th scope="col">
+                        Mô tả khóa học
+                        {{{sortable 'description' _sort}}}
+                    </th>
                     <th scope="col" colspan=2>Thời gian tạo</th>
                 </tr>
             </thead>
@@ -93,7 +100,8 @@
     document.addEventListener('DOMContentLoaded',function(){
         var courseId;
         var formAction = document.forms['form-delete']
-        var formContainer = document.forms['form-container']
+        //var formContainer = document.forms['form-container']
+        var formContainer = $('form[name="form-container"]')
         var checkBoxAll = $('#checked-all'); //jQuery : 1 id
         var courseItemCheckbox = $('input[name="coursesId[]"]') // 1 the input
         var renderButtonSubmit = $('.render-btn-submit') //1 class
@@ -109,6 +117,15 @@
             formAction.submit()
         }
 
+        renderButtonSubmit.click('submit', function (e){
+          var isChecked = !$(this).hasClass('disabled')
+          if(isChecked == false){
+            e.preventDefault()
+          } else {
+            formAction.submit()
+          }
+        })
+
         //clicked check-all change
         checkBoxAll.change(function(){
           if($(this).prop('checked')){
@@ -120,20 +137,14 @@
           }       
         })
 
+        
+
         //click items checkbox change
         courseItemCheckbox.change(function(){
           // so sánh số lượng tổng với số lượng đang check
           var courseCount = courseItemCheckbox.length === $('input[name="coursesId[]"]:checked').length 
           checkBoxAll.prop('checked', courseCount) 
            renderCheckAllSubmitBtn()
-        })
-
-        //click submit button
-        renderButtonSubmit.on('submit', function(e){
-          var checkClass = !$(this).hasClass('disabled') // => false
-          if(checkClass == false){
-            e.preventDefault()
-          }
         })
 
         function renderCheckAllSubmitBtn() {
